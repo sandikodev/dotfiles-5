@@ -1,0 +1,202 @@
+local wibox = require("wibox")
+local awful = require("awful")
+local beautiful = require("beautiful")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
+local gears = require("gears")
+local helpers = require("helpers")
+
+-- Set some constants
+local icon_size = dpi(36)
+local progress_bar_width = dpi(215)
+
+-- Helper function that changes the appearance of progress bars and their icons
+-- Create horizontal rounded bars
+local function format_progress_bar(bar, icon)
+    icon.forced_height = icon_size
+    icon.forced_width = icon_size
+    icon.resize = true
+    bar.forced_width = progress_bar_width
+    bar.shape = gears.shape.rounded_bar
+    bar.bar_shape = gears.shape.rounded_bar
+
+    local w = wibox.widget{
+        nil,
+        {
+            icon,
+            bar,
+            spacing = dpi(10),
+            layout = wibox.layout.fixed.horizontal
+        },
+        expand = "none",
+        layout = wibox.layout.align.horizontal
+    }
+    return w
+end
+
+local time = wibox.widget.textclock("%R")
+time.align = "center"
+time.valign = "center"
+time.font = "sans 55"
+
+local date = wibox.widget.textclock("%A, %B %d")
+date.align = "center"
+date.valign = "center"
+date.font = "sans 16"
+
+local fancy_date = wibox.widget.textclock("%-j days around the sun")
+-- local fancy_date = wibox.widget.textclock("Knowing that today is %A fills you with determination.")
+fancy_date.align = "center"
+fancy_date.valign = "center"
+fancy_date.font = "sans 11"
+
+-- Volume bar
+local volume_icon = wibox.widget.imagebox(beautiful.icon_volume)
+local volume_bar = require("candy.volume_bar")
+local volume = format_progress_bar(volume_bar, volume_icon)
+
+volume:buttons(gears.table.join(
+    -- Left click - Mute / Unmute
+    awful.button({ }, 1, function ()
+        helpers.volume_control("toggle")
+    end),
+    -- Right click - Run or raise pavucontrol
+    awful.button({ }, 3, function ()
+        -- helpers.run_or_raise({class = 'Pavucontrol'}, true, "pavucontrol")
+    end),
+    -- Scroll - Increase / Decrease volume
+    awful.button({ }, 4, function ()
+        helpers.volume_control("up")
+    end),
+    awful.button({ }, 5, function ()
+        helpers.volume_control("down")
+    end)
+))
+
+awesome.connect_signal("volume::update", function(vol, muted)
+    if muted then
+        volume_icon.image = beautiful.icon_muted
+    else
+        volume_icon.image = beautiful.icon_volume
+    end
+end)
+
+-- Battery
+local battery_icon = wibox.widget.imagebox(beautiful.icon_battery)
+local battery_bar = require("candy.battery_bar")
+local battery = format_progress_bar(battery_bar, battery_icon)
+
+awesome.connect_signal("evil::charger", function(plugged)
+    if plugged then
+        battery_icon.image = beautiful.icon_battery_charging
+    else
+        battery_icon.image = beautiful.icon_battery
+    end
+end)
+
+-- Ram
+local ram_icon = wibox.widget.imagebox(beautiful.icon_ram)
+local ram_bar = require("candy.ram_bar")
+local ram = format_progress_bar(ram_bar, ram_icon)
+
+-- Cpu temperature
+local temperature_icon = wibox.widget.imagebox(beautiful.icon_temperature)
+local temperature_bar = require("candy.temperature_bar")
+local temperature = format_progress_bar(temperature_bar, temperature_icon)
+
+-- Average system load
+local sysload_icon = wibox.widget.imagebox(beautiful.icon_sysload)
+local sysload_bar = require("candy.sysload_bar")
+local sysload = format_progress_bar(sysload_bar, sysload_icon)
+
+-- Brightness
+local brightness_icon = wibox.widget.imagebox(beautiful.icon_brightness)
+local brightness_bar = require("candy.brightness_bar")
+local brightness = format_progress_bar(brightness_bar, brightness_icon)
+
+local sidebar = wibox({visible = false, ontop = true, type = "dock"})
+sidebar.height = beautiful.sidebar_height or awful.screen.focused().geometry.height
+sidebar.width = beautiful.sidebar_width or dpi(300)
+
+sidebar:buttons(gears.table.join(
+    -- Middle click - Hide sidebar
+    awful.button({ }, 2, function ()
+        sidebar.visible = false
+    end)
+    -- Right click - Hide sidebar
+    -- awful.button({ }, 3, function ()
+    --     sidebar.visible = false
+    --     -- mymainmenu:show()
+    -- end)
+))
+
+local exit_btn = wibox.widget {
+    {
+        image = beautiful.icon_poweroff,
+        resize = true;
+        forced_width = 40,
+        forced_height = 40,
+        widget = wibox.widget.imagebox
+    },
+    {
+        text = "Exit",
+        widget = wibox.widget.textbox
+    },
+    layout = wibox.layout.fixed.horizontal
+}
+
+exit_btn:buttons(gears.table.join(
+    awful.button({}, 1, function()
+        awesome.emit_signal("sidebar::hide")
+        exit_screen_show()
+    end)
+))
+
+-- Empty textbox to make a line break
+local br = wibox.widget.textbox(" ")
+
+sidebar:setup {
+    { -- Top
+        time,
+        date,
+        fancy_date,
+        layout = wibox.layout.fixed.vertical
+    },
+    { -- Middle
+        br,
+        volume,
+        battery,
+        brightness,
+        ram,
+        sysload,
+        temperature,
+        layout = wibox.layout.fixed.vertical
+    },
+    { -- Bottom
+        {
+            {
+                nil,
+                exit_btn,
+                layout = wibox.layout.align.horizontal,
+                expand = "none"
+            },
+            bottom = 20,
+            widget = wibox.container.margin
+        },
+        layout = wibox.layout.fixed.vertical
+    },
+    layout = wibox.layout.align.vertical
+}
+
+-- Hide sidebar on mouseleave
+sidebar:connect_signal("mouse::leave", function()
+    sidebar.visible = false
+end)
+
+awesome.connect_signal("sidebar::toggle", function()
+    sidebar.visible = not sidebar.visible
+end)
+
+awesome.connect_signal("sidebar::hide", function()
+    sidebar.visible = false
+end)
