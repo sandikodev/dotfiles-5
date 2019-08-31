@@ -85,9 +85,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.se,
 }
 
-user = {
-    lock_screen_password = "awesome"
-}
+-- Require user variables. This file may contain some private information
+require("user")
 -- }}}
 
 -- Load some sweet modules
