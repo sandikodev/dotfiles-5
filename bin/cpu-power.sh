@@ -6,15 +6,14 @@ get_current_governor() {
 }
 
 switch_governor() {
-    if [[ "$1" == "powersave" ]]; then
-        for (( i = 0; i < $(nproc); i++ )); do
-          sudo cpufreq-set -c $i -g performance
-        done
-    elif [[ "$1" == "performance" ]]; then
-        for (( i = 0; i < $(nproc); i++ )); do
-          sudo cpufreq-set -c $i -g powersave
-        done
-    fi
+    # Change governor for each cpu
+    for (( i = 0; i < $(nproc); i++ )); do
+        if [[ "$1" == "powersave" ]]; then
+              sudo cpufreq-set -c $i -g performance
+        elif [[ "$1" == "performance" ]]; then
+              sudo cpufreq-set -c $i -g powersave
+        fi
+    done
     awesome-client "awesome.emit_signal(\"cpu::governor\", \"$(get_current_governor)\", false)"
 }
 
