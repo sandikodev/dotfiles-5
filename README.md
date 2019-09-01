@@ -4,3 +4,4 @@
 - rxvt-unicode - terminal
 - redshift - night light
 - compton (chjj) - window compositor
+- cpufrequtils - cpu governor switcher
