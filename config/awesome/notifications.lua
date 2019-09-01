@@ -9,6 +9,7 @@ local battery_critical_level = 20 -- Percents
 local layout_notification
 local volume_notification
 local brightness_notification
+local governor_notification
 
 naughty.config.padding = beautiful.notification_padding
 naughty.config.spacing = beautiful.notification_spacing
@@ -92,3 +93,19 @@ end)
 --         })
 --     end
 -- end)
+
+-- Notify when CPU governor changed
+awesome.connect_signal("cpu::governor", function(governor, skip_notification)
+    if not skip_notification then
+        local replace_id = governor_notification and governor_notification.id or nil
+        local notification_icon = beautiful.icon_sysload
+        if governor == "performance" then notification_icon = beautiful.icon_temperature end
+        governor_notification = naughty.notify({
+            title = "CPU governor",
+            text = governor,
+            replaces_id = replace_id,
+            icon = notification_icon,
+            icon_size = beautiful.notification_icon_size
+        })
+    end
+end)

@@ -152,6 +152,37 @@ exit_btn:buttons(gears.table.join(
     end)
 ))
 
+local governor_switch_text = wibox.widget.textbox("governor")
+local governor_switch_icon = wibox.widget.imagebox(beautiful.icon_sysload)
+governor_switch_icon.resize = true
+governor_switch_icon.forced_width = 40
+governor_switch_icon.forced_height = 40
+local governor_switch = wibox.widget {
+    nil,
+    {
+        governor_switch_icon,
+        governor_switch_text,
+        layout = wibox.layout.fixed.horizontal
+    },
+    expand = "none",
+    layout = wibox.layout.align.horizontal
+}
+awesome.connect_signal("cpu::governor", function(governor)
+    governor_switch_text.text = governor
+    if governor == "performance" then
+        governor_switch_icon.image = beautiful.icon_temperature
+    else
+        governor_switch_icon.image = beautiful.icon_sysload
+    end
+end)
+governor_switch:buttons(gears.table.join(
+    awful.button({}, 1, function()
+        awful.spawn.with_shell("cpu-power.sh --switch")
+    end)
+))
+-- Initialize current governor info
+awful.spawn.with_shell("cpu-power.sh --emit")
+
 -- Empty textbox to make a line break
 local br = wibox.widget.textbox(" ")
 
@@ -170,6 +201,8 @@ sidebar:setup {
         ram,
         sysload,
         temperature,
+        br,
+        governor_switch,
         layout = wibox.layout.fixed.vertical
     },
     { -- Bottom
