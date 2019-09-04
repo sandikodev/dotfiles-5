@@ -7,6 +7,7 @@ local helpers = require("helpers")
 
 local theme_path = "~/.config/awesome/themes/insomnia"
 local icons_path = "~/.config/awesome/icons"
+local weather_icons = "~/.config/awesome/weather"
 
 local theme = {}
 
@@ -140,6 +141,20 @@ theme.icon_temperature = icons_path.."/temperature.png"
 theme.icon_sysload = icons_path.."/sysload.png"
 theme.icon_terminal = icons_path.."/terminal.png"
 theme.icon_suspend = icons_path.."/suspend.png"
+-- Weather icons
+theme.weather_sun = weather_icons.."/sun.png"
+theme.weather_moon = weather_icons.."/moon.png"
+theme.weather_rain = weather_icons.."/rain.png"
+theme.weather_snow = weather_icons.."/snow.png"
+theme.weather_sleet = weather_icons.."/sleet.png"
+theme.weather_wind = weather_icons.."/wind.png"
+theme.weather_fog = weather_icons.."/fog.png"
+theme.weather_cloudy = weather_icons.."/cloudy.png"
+theme.weather_cloudy_day = weather_icons.."/autumn.png"
+theme.weather_cloudy_night = weather_icons.."/cloudy-night.png"
+theme.weather_hail = weather_icons.."/hail.png"
+theme.weather_thunderstorm = weather_icons.."/thunderstorm.png"
+theme.weather_tornado = weather_icons.."/tornado.png"
 
 -- Wallpaper
 theme.wallpaper = theme_path.."/wallpaper.jpg"
