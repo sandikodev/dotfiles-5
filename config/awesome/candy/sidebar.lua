@@ -184,11 +184,12 @@ governor_switch:buttons(gears.table.join(
 awful.spawn.with_shell("cpu-power.sh --emit")
 
 -- Weather section
-local weather_icon = wibox.widget.imagebox(beautiful.weather_sun)
+local weather_icon = wibox.widget.imagebox()
 weather_icon.resize = true
-weather_icon.forced_width = 50
-weather_icon.forced_height = 50
+weather_icon.forced_width = 44
+weather_icon.forced_height = 44
 local weather_summary = wibox.widget.textbox()
+weather_summary.font = "sans 12"
 local weather = wibox.widget {
     nil,
     {
@@ -201,8 +202,8 @@ local weather = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 awesome.connect_signal("evil::weather", function(forecast)
-    local celsius = helpers.farenheit_to_celsius(tonumber(forecast.currently.temperature))
-    weather_summary.text = forecast.currently.summary..", "..celsius.."°"
+    local temperature = helpers.farenheit_to_celsius(tonumber(forecast.currently.temperature))
+    weather_summary.text = forecast.currently.summary..", "..temperature.."°"
     weather_icon.image = helpers.get_weather_icon(forecast.currently.icon)
 end)
 
