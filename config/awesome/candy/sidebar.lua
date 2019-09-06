@@ -186,8 +186,8 @@ awful.spawn.with_shell("cpu-power.sh --emit")
 -- Weather section
 local weather_icon = wibox.widget.imagebox()
 weather_icon.resize = true
-weather_icon.forced_width = 44
-weather_icon.forced_height = 44
+weather_icon.forced_width = 34
+weather_icon.forced_height = 34
 local weather_summary = wibox.widget.textbox()
 weather_summary.font = "sans 12"
 local weather = wibox.widget {
