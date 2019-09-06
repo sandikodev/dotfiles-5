@@ -25,7 +25,8 @@ echo "${red}> Copy configs..${reset}"
 cp -r $HOME/.config/awesome ./config
 cp -r $HOME/.config/fontconfig ./config
 cp -r $HOME/.config/redshift ./config
-cp -r $HOME/.config/compton.conf ./config
+cp -r $HOME/.config/ranger ./config
+cp $HOME/.config/compton.conf ./config
 
 # Copy binaries
 echo "${orange}> Copy binaries..${reset}"
