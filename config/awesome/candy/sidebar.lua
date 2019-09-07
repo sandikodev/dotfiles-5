@@ -208,30 +208,6 @@ night_mode:buttons(gears.table.join(
     end)
 ))
 
--- Weather section
-local weather_icon = wibox.widget.imagebox()
-weather_icon.resize = true
-weather_icon.forced_width = 34
-weather_icon.forced_height = 34
-local weather_summary = wibox.widget.textbox()
-weather_summary.font = "sans 12"
-local weather = wibox.widget {
-    nil,
-    {
-        weather_icon,
-        weather_summary,
-        spacing = 10,
-        layout = wibox.layout.fixed.horizontal
-    },
-    expand = "none",
-    layout = wibox.layout.align.horizontal
-}
-awesome.connect_signal("evil::weather", function(forecast)
-    local temperature = helpers.farenheit_to_celsius(tonumber(forecast.currently.temperature))
-    weather_summary.text = forecast.currently.summary..", "..temperature.."°"
-    weather_icon.image = helpers.get_weather_icon(forecast.currently.icon)
-end)
-
 -- Empty textbox to make a line break
 local br = wibox.widget.textbox(" ")
 
@@ -240,8 +216,6 @@ sidebar:setup {
         time,
         date,
         fancy_date,
-        br,
-        weather,
         layout = wibox.layout.fixed.vertical
     },
     { -- Middle
