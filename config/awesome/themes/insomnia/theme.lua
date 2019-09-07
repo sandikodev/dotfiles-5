@@ -141,6 +141,7 @@ theme.icon_temperature = icons_path.."/temperature.png"
 theme.icon_sysload = icons_path.."/sysload.png"
 theme.icon_terminal = icons_path.."/terminal.png"
 theme.icon_suspend = icons_path.."/suspend.png"
+theme.icon_redshift = icons_path.."/redshift.png"
 -- Weather icons
 theme.weather_sun = weather_icons.."/sun.svg"
 theme.weather_moon = weather_icons.."/moon.svg"

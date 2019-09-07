@@ -152,7 +152,7 @@ exit_btn:buttons(gears.table.join(
     end)
 ))
 
-local governor_switch_text = wibox.widget.textbox("governor")
+local governor_switch_text = wibox.widget.textbox("CPU Governor")
 local governor_switch_icon = wibox.widget.imagebox(beautiful.icon_sysload)
 governor_switch_icon.resize = true
 governor_switch_icon.forced_width = 40
@@ -168,7 +168,7 @@ local governor_switch = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 awesome.connect_signal("cpu::governor", function(governor)
-    governor_switch_text.text = governor
+    governor_switch_text.markup = helpers.colorize_text("CPU Governor", beautiful.xcolor0).."\n"..governor
     if governor == "performance" then
         governor_switch_icon.image = beautiful.icon_temperature
     else
@@ -182,6 +182,32 @@ governor_switch:buttons(gears.table.join(
 ))
 -- Initialize current governor info
 awful.spawn.with_shell("cpu-power.sh --emit")
+
+-- Night mode section
+local night_mode_text = wibox.widget.textbox("Night Mode")
+local night_mode_icon = wibox.widget.imagebox(beautiful.icon_redshift)
+night_mode_icon.resize = true
+night_mode_icon.forced_width = 40
+night_mode_icon.forced_height = 40
+local night_mode = wibox.widget {
+    nil,
+    {
+        night_mode_icon,
+        night_mode_text,
+        layout = wibox.layout.fixed.horizontal
+    },
+    expand = "none",
+    layout = wibox.layout.align.horizontal
+}
+awesome.connect_signal("system::nightmode", function(state)
+    night_mode_text.markup = helpers.colorize_text("Night Mode", beautiful.xcolor0).."\n"..state
+end)
+night_mode:buttons(gears.table.join(
+    awful.button({}, 1, function()
+        awful.spawn.with_shell("night-mode.sh")
+    end)
+))
+awful.spawn.with_shell("night-mode.sh --emit")
 
 -- Weather section
 local weather_icon = wibox.widget.imagebox()
@@ -228,7 +254,17 @@ sidebar:setup {
         sysload,
         temperature,
         br,
-        governor_switch,
+        {
+            nil,
+            {
+                governor_switch,
+                night_mode,
+                spacing = 10,
+                layout = wibox.layout.fixed.horizontal
+            },
+            expand = "none",
+            layout = wibox.layout.align.horizontal
+        },
         layout = wibox.layout.fixed.vertical
     },
     { -- Bottom
