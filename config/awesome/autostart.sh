@@ -11,6 +11,7 @@ function run {
 
 run compton
 run redshift
+sleep 0.5 && night-mode.sh --emit
 
 # Keyboard layout
 setxkbmap -layout "us,ru,ua" -option "grp:alt_shift_toggle"

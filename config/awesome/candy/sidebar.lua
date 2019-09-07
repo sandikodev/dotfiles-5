@@ -207,7 +207,6 @@ night_mode:buttons(gears.table.join(
         awful.spawn.with_shell("night-mode.sh")
     end)
 ))
-awful.spawn.with_shell("night-mode.sh --emit")
 
 -- Weather section
 local weather_icon = wibox.widget.imagebox()
