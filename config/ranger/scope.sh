@@ -39,8 +39,6 @@ HIGHLIGHT_TABWIDTH=8
 HIGHLIGHT_STYLE='pablo'
 PYGMENTIZE_STYLE='autumn'
 
-CONVERSION_PNG="/tmp/ranger-temporary-image.png"
-
 
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
@@ -92,10 +90,9 @@ handle_image() {
     local mimetype="${1}"
     case "${mimetype}" in
         # SVG
-        image/svg+xml|image/svg)
-            inkscape -z "${FILE_PATH}" -e "$CONVERSION_PNG"
-            convert "$CONVERSION_PNG" -background "#21252b" -flatten "${IMAGE_CACHE_PATH}" && exit 6
-            exit 1;;
+        # image/svg+xml)
+        #     convert "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && exit 6
+        #     exit 1;;
 
         # Image
         image/*)
