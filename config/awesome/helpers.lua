@@ -62,41 +62,6 @@ function helpers.volume_control(option)
     end)
 end
 
-function helpers.get_weather_icon(icon)
-    if icon == "clear-day" then
-        return beautiful.weather_sun
-    elseif icon == "clear-night" then
-        return beautiful.weather_moon
-    elseif icon == "rain" then
-        return beautiful.weather_rain
-    elseif icon == "cloudy" then
-        return beautiful.weather_cloudy
-    elseif icon == "snow" then
-        return beautiful.weather_snow
-    elseif icon == "sleet" then
-        return beautiful.weather_sleet
-    elseif icon == "wind" then
-        return beautiful.weather_wind
-    elseif icon == "fog" then
-        return beautiful.weather_fog
-    elseif icon == "partly-cloudy-day" then
-        return beautiful.weather_cloudy_day
-    elseif icon == "partly-cloudy-night" then
-        return beautiful.weather_cloudy_night
-    elseif icon == "hail" then
-        return beautiful.weather_hail
-    elseif icon == "thunderstorm" then
-        return beautiful.weather_thunderstorm
-    elseif icon == "tornado" then
-        return beautiful.weather_tornado
-    end
-end
-
-function helpers.farenheit_to_celsius(farenheit)
-    local celsius = (farenheit - 32) * 5 / 9
-    return math.ceil(celsius)
-end
-
 -- Rectangle with rounded borders shape
 helpers.rrect = function(radius)
     return function(cr, width, height)
