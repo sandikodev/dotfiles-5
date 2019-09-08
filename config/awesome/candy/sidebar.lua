@@ -147,7 +147,7 @@ local exit_btn = wibox.widget {
 
 exit_btn:buttons(gears.table.join(
     awful.button({}, 1, function()
-        awesome.emit_signal("sidebar::hide")
+        hide_sidebar()
         exit_screen_show()
     end)
 ))
@@ -261,10 +261,10 @@ sidebar:connect_signal("mouse::leave", function()
     sidebar.visible = false
 end)
 
-awesome.connect_signal("sidebar::toggle", function()
+function toggle_sidebar()
     sidebar.visible = not sidebar.visible
-end)
+end
 
-awesome.connect_signal("sidebar::hide", function()
+function hide_sidebar()
     sidebar.visible = false
-end)
+end

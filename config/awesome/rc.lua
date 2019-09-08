@@ -363,7 +363,7 @@ globalkeys = gears.table.join(
               {description = "show lock screen", group = "awesome"}),
     awful.key({ modkey }, "e", function() exit_screen_show() end,
               {description = "show exit screen", group = "awesome"}),
-    awful.key({ modkey }, "a", function() awesome.emit_signal("sidebar::toggle") end,
+    awful.key({ modkey }, "a", function() toggle_sidebar() end,
               {description = "toggle sidebar", group = "awesome"}),
     awful.key({}, "Print", function() awful.spawn.with_shell("screenshot.sh") end,
               {description = "take screenshot", group = "awesome"}),
