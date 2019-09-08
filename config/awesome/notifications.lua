@@ -6,10 +6,10 @@ local battery_low_notified = false
 local battery_critical_level = 20 -- Percents
 
 -- Store notification objects to be able to replace notificaions
-local layout_notification
 local volume_notification
 local brightness_notification
 local governor_notification
+local battery_notification
 
 naughty.config.padding = beautiful.notification_padding
 naughty.config.spacing = beautiful.notification_spacing
@@ -22,8 +22,9 @@ naughty.config.presets.critical = {
 }
 
 -- Show notificaion when battery charger plugged
-awesome.connect_signal("evil::charger", function(plugged, is_initial)
-    if not is_initial and plugged then
+awesome.connect_signal("evil::charger", function(plugged, skip_notification)
+    if not skip_notification and plugged then
+        naughty.destroy(battery_notification)
         naughty.notify({
             text = "Battery is charging.",
             icon = beautiful.icon_battery,
@@ -35,9 +36,9 @@ end)
 -- Notify when battery reaches critical level
 awesome.connect_signal("evil::battery", function(value)
     if value <= battery_critical_level and not battery_low_notified then
-        naughty.notify({
+        battery_notification = naughty.notify({
             title = "Battery is low",
-            text = "Please, plug the charger.",
+            text = "Please, connect the charger.",
             timeout = 0,
             icon = beautiful.icon_battery,
             icon_size = beautiful.notification_icon_size
@@ -77,22 +78,6 @@ awesome.connect_signal("evil::brightness", function(brightness, skip_notificatio
         })
     end
 end)
-
--- Notify changed layout
--- tag.connect_signal("property::layout", function()
---     local replace_id = layout_notification and layout_notification.id or nil
---     local layout_name = awful.layout.getname(awful.layout.get(awful.screen.focused()))
---     if not awesome.startup then
---         layout_notification = naughty.notify({
---             title = "Layout",
---             text = layout_name,
---             replaces_id = replace_id,
---             timeout = 3,
---             icon = beautiful.icon_layout,
---             icon_size = beautiful.notification_icon_size
---         })
---     end
--- end)
 
 -- Notify when CPU governor changed
 awesome.connect_signal("cpu::governor", function(governor, skip_notification)
