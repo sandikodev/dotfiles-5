@@ -142,6 +142,10 @@ theme.icon_sysload = icons_path.."/sysload.png"
 theme.icon_terminal = icons_path.."/terminal.png"
 theme.icon_suspend = icons_path.."/suspend.png"
 theme.icon_redshift = icons_path.."/redshift.png"
+-- Playerctl icons
+theme.playerctl_toggle = icons_path.."/playerctl_toggle.png"
+theme.playerctl_next = icons_path.."/playerctl_next.png"
+theme.playerctl_prev = icons_path.."/playerctl_prev.png"
 
 -- Wallpaper
 theme.wallpaper = theme_path.."/wallpaper.jpg"
