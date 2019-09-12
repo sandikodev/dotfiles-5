@@ -1,3 +1,4 @@
 #!/bin/bash
 SONG="$(mpc current)"
-notify-send "Now playing" "$SONG"
+ICON="$HOME/.config/awesome/icons/music.png"
+notify-send "Now playing" "$SONG" -i "$ICON"
