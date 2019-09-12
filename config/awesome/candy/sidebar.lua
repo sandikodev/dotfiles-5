@@ -37,8 +37,8 @@ end
 local function make_playerctl_button(image, onclick)
     local btn = wibox.widget.imagebox(image)
     btn.resize = true
-    btn.forced_width = 40
-    btn.forced_height = 40
+    btn.forced_width = 42
+    btn.forced_height = 42
     btn:buttons(gears.table.join(
         awful.button({}, 1, onclick)
     ))
@@ -220,21 +220,30 @@ night_mode:buttons(gears.table.join(
 ))
 
 -- MPD widget section
--- TODO Add currently playing song info
 local playerctl_toggle = make_playerctl_button(beautiful.playerctl_toggle, function() awful.spawn.with_shell("mpc toggle") end)
 local playerctl_next = make_playerctl_button(beautiful.playerctl_next, function() awful.spawn.with_shell("mpc next") end)
 local playerctl_prev = make_playerctl_button(beautiful.playerctl_prev, function() awful.spawn.with_shell("mpc prev") end)
+local mpd_song = wibox.widget.textbox()
+mpd_song.align = "center"
+mpd_song.valign = "center"
 local mpd = wibox.widget {
-    nil,
     {
-        playerctl_prev,
-        playerctl_toggle,
-        playerctl_next,
-        layout = wibox.layout.fixed.horizontal
+        nil,
+        {
+            playerctl_prev,
+            playerctl_toggle,
+            playerctl_next,
+            layout = wibox.layout.fixed.horizontal
+        },
+        expand = "none",
+        layout = wibox.layout.align.horizontal
     },
-    expand = "none",
-    layout = wibox.layout.align.horizontal
+    mpd_song,
+    layout = wibox.layout.fixed.vertical
 }
+awesome.connect_signal("evil::mpd", function(title, artist)
+    mpd_song.text = title.."\n"..artist
+end)
 
 -- Empty textbox to make a line break
 local br = wibox.widget.textbox(" ")
