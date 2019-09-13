@@ -10,6 +10,7 @@ local volume_notification
 local brightness_notification
 local governor_notification
 local battery_notification
+local player_notification
 
 naughty.config.padding = beautiful.notification_padding
 naughty.config.spacing = beautiful.notification_spacing
@@ -93,4 +94,14 @@ awesome.connect_signal("cpu::governor", function(governor, skip_notification)
             icon_size = beautiful.notification_icon_size
         })
     end
+end)
+
+awesome.connect_signal("player::song", function(song)
+    local replace_id = player_notification and player_notification.id or nil
+    player_notification = naughty.notify({
+        text = song,
+        title = "Now playing",
+        icon = beautiful.icon_music,
+        replaces_id = replace_id
+    })
 end)
