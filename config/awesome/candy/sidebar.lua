@@ -226,6 +226,9 @@ local playerctl_prev = make_playerctl_button(beautiful.playerctl_prev, function(
 local mpd_song = wibox.widget.textbox()
 mpd_song.align = "center"
 mpd_song.valign = "center"
+mpd_song:buttons(gears.table.join(
+    awful.button({}, 1, function() awful.spawn.with_shell(terminal.." -e ncmpcpp") end)
+))
 local mpd = wibox.widget {
     {
         nil,
