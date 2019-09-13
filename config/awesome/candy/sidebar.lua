@@ -241,8 +241,9 @@ local mpd = wibox.widget {
     mpd_song,
     layout = wibox.layout.fixed.vertical
 }
-awesome.connect_signal("evil::mpd", function(title, artist)
-    mpd_song.text = title.."\n"..artist
+awesome.connect_signal("evil::mpd", function(title, artist, paused)
+    local color = paused and beautiful.xcolor8 or beautiful.xforeground
+    mpd_song.markup = helpers.colorize_text(title.."\n"..artist, color)
 end)
 
 -- Empty textbox to make a line break

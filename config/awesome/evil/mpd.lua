@@ -4,7 +4,11 @@ local function emit_info()
     awful.spawn.easy_async({"mpc", "-f", "[Title: %title%\nArtist: %artist%]"}, function(stdout)
         local title = stdout:match("Title:%s([^%c]*)") or ""
         local artist = stdout:match("Artist:%s([^%c]*)") or ""
-        awesome.emit_signal("evil::mpd", title, artist)
+        local status = stdout:match("%[(%w+)%]")
+        local paused = status == "paused" and true or false
+        artist = artist:gsub("%&", "&amp;")
+        title = title:gsub("%&", "&amp;")
+        awesome.emit_signal("evil::mpd", title, artist, paused)
     end)
 end
 
