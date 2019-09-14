@@ -87,7 +87,7 @@ awesome.connect_signal("cpu::governor", function(governor, skip_notification)
         local notification_icon = beautiful.icon_sysload
         if governor == "performance" then notification_icon = beautiful.icon_temperature end
         governor_notification = naughty.notify({
-            title = "CPU governor",
+            title = "CPU Governor",
             text = governor,
             replaces_id = replace_id,
             icon = notification_icon,

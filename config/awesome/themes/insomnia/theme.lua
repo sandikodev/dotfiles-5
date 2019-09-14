@@ -123,7 +123,8 @@ theme.taglist_text_color_urgent   = { theme.xcolor9, theme.xcolor10, theme.xcolo
 --theme.bg_widget = "#cc0000"
 theme.maximized_hide_border = true
 theme.tasklist_disable_icon = true
-theme.titlebar_size = 28
+theme.titlebar_size = 26
+theme.wibar_height = 24
 theme.border_radius = dpi(6)
 
 -- Icons

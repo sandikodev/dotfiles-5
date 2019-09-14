@@ -147,7 +147,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock("%R")
 
 local tasklist_buttons = gears.table.join(
                      awful.button({ }, 1, function (c)
@@ -242,6 +242,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            spacing = 2,
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
