@@ -28,6 +28,7 @@ cp -r $HOME/.config/redshift ./config
 cp -r $HOME/.config/ranger ./config
 cp -r $HOME/.config/mpd ./config
 cp -r $HOME/.config/ncmpcpp ./config
+cp -r $HOME/.config/cava ./config
 cp $HOME/.config/compton.conf ./config
 
 # Copy binaries
