@@ -59,6 +59,7 @@ function helpers.volume_control(option)
 
         awful.spawn.with_shell(cmd)
         awesome.emit_signal("volume::update", next_volume, next_mute, false)
+        collectgarbage()
     end)
 end
 
