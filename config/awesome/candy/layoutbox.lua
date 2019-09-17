@@ -22,9 +22,16 @@ layoutbox.forced_width = 22
 layoutbox.align = "center"
 layoutbox.valign = "center"
 
+local layout_tooltip = awful.tooltip {
+    objects = { layoutbox },
+    delay_show = 1,
+    text = ""
+}
+
 local function update_widget()
     local layout = get_current_layout()
     layoutbox.text = icons[layout] or ""
+    layout_tooltip.text = layout
 end
 
 layoutbox:buttons(gears.table.join(
