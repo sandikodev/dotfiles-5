@@ -136,8 +136,18 @@ else
 end
 
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+local mylauncher = wibox.widget {
+    widget = wibox.widget.textbox,
+    text = "",
+    font = "Typicons 14",
+    align = "center",
+    valign = "center",
+    forced_width = 28
+}
+
+mylauncher:buttons(gears.table.join(
+    awful.button({}, 1, function() mymainmenu:toggle() end),
+    awful.button({}, 3, function() toggle_sidebar() end)))
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
