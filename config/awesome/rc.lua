@@ -98,6 +98,7 @@ require("candy.sidebar")
 
 -- Widgets
 local candy_taglist = require("candy.taglist")
+local candy_layoutbox = require("candy.layoutbox")
 
 -- Daemons. Most widgets that display system info depend on evil
 require("evil")
@@ -203,14 +204,6 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
@@ -246,7 +239,7 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
-            s.mylayoutbox,
+            candy_layoutbox,
         },
     }
 end)
