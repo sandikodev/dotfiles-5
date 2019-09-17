@@ -546,6 +546,10 @@ awful.rules.rules = {
     -- Set urxvt to appear in the center of the screen
     { rule = { class = "URxvt" },
       properties = { placement = awful.placement.centered+awful.placement.no_overlap+awful.placement.no_offscreen } },
+
+    -- Disable titlebar for Discord Updater
+    { rule = { name = "Discord Updater" },
+      properties = { titlebars_enabled = false } },
 }
 -- }}}
 
