@@ -12,13 +12,13 @@ fi
 
 if [[ "$1" = "-s" ]]; then
     # Area/window selection
-    notify-send "Select area to capture." --urgency low -i $ICON_PATH
-    scrot -s $FILENAME
+    notify-send "Select area to capture." --urgency low -i $ICON_PATH -t 1500
+    scrot -s $FILENAME -q 95
     if [[ "$?" = "0" ]]; then
         notify-send "Screenshot taken." --urgency low -i $ICON_PATH
     fi
 else
     # Fullscreen shot
-    scrot $FILENAME
+    scrot $FILENAME -q 95
     notify-send "Screenshot taken." --urgency low -i $ICON_PATH
 fi
