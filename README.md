@@ -1,3 +1,5 @@
+![screenshot](screenshot.png)
+
 #### Details:
 - OS: Ubuntu 19.04
 - WM: Awesomewm
