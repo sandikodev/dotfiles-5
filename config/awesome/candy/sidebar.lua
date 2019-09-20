@@ -37,8 +37,8 @@ end
 local function make_playerctl_button(image, onclick)
     local btn = wibox.widget.imagebox(image)
     btn.resize = true
-    btn.forced_width = 42
-    btn.forced_height = 42
+    btn.forced_width = 44
+    btn.forced_height = 44
     btn:buttons(gears.table.join(
         awful.button({}, 1, onclick)
     ))
@@ -223,9 +223,19 @@ night_mode:buttons(gears.table.join(
 local playerctl_toggle = make_playerctl_button(beautiful.playerctl_toggle, function() awful.spawn.with_shell("mpc toggle") end)
 local playerctl_next = make_playerctl_button(beautiful.playerctl_next, function() awful.spawn.with_shell("mpc next") end)
 local playerctl_prev = make_playerctl_button(beautiful.playerctl_prev, function() awful.spawn.with_shell("mpc prev") end)
-local mpd_song = wibox.widget.textbox()
-mpd_song.align = "center"
-mpd_song.valign = "center"
+local mpd_title = wibox.widget.textbox()
+local mpd_artist = wibox.widget.textbox()
+mpd_title.align = "center"
+mpd_title.valign = "center"
+mpd_title.font = "sans 12"
+mpd_artist.align = "center"
+mpd_artist.valign = "center"
+mpd_artist.font = "sans 10"
+local mpd_song = wibox.widget {
+    mpd_title,
+    mpd_artist,
+    layout = wibox.layout.fixed.vertical
+}
 mpd_song:buttons(gears.table.join(
     awful.button({}, 1, function() awful.spawn.with_shell(terminal.." -e ncmpcpp") end)
 ))
@@ -246,7 +256,8 @@ local mpd = wibox.widget {
 }
 awesome.connect_signal("evil::mpd", function(title, artist, paused)
     local color = paused and beautiful.xcolor8 or beautiful.xforeground
-    mpd_song.markup = helpers.colorize_text(title.."\n"..artist, color)
+    mpd_title.markup = helpers.colorize_text(title, color)
+    mpd_artist.markup = helpers.colorize_text(artist, color)
 end)
 
 -- Empty textbox to make a line break
