@@ -35,3 +35,5 @@ user = {
 Average system load daemon contains hardcoded variable that specifies the number of CPUs. Edit `evil/sysload.lua` to make system load bar show correct information.
 
 The script `copy-dotfiles.sh` is used for copy dotfiles into git working directory. To make this setup work on your system you should copy config files manually.
+
+Wallpaper [here](https://unsplash.com/photos/lbIgR6AwLfw).
