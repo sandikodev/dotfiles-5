@@ -316,6 +316,7 @@ sidebar:connect_signal("mouse::leave", function()
 end)
 
 function toggle_sidebar()
+    sidebar.screen = awful.screen.focused()
     sidebar.visible = not sidebar.visible
 end
 
